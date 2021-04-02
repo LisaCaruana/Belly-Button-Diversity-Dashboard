@@ -1,56 +1,76 @@
-d3.json('../../samples.json').then(data=> {
-    console.log(data)
-
-    var subject_id = data['names']
-    console.log(subject_id)
-
-    var dropdownMenu = document.getElementById("selDataset");
-
-    for(var i = 0; i < subject_id.length; i++) {
-        var opt = subject_id[i];
-        var el = document.createElement("option");
-        el.textContent = opt;
-        el.value = opt;
-        dropdownMenu.appendChild(el);
-    }
 
     // d3.selectAll("#selDataset").on("change", fillDropdown);
     
     // function fillDropdown ()
 
 
-});
 // Want to create a function to build all of the charts, need filtering of dataset depending on what ID number is selected 
-function optionChanged (select_id) {
-    d3.json('../../samples.json').then(data=> {
-        console.log(data);
+// function optionChanged (select_id) {
+//     d3.json('../../samples.json').then(data=> {
+//         console.log(data);
     
-    demographics = data['metadata']
-    console.log(demographics)
-});  
+//     demographics = data['metadata']
+//     console.log(demographics)
+// });  
 
-var trace1 = {
-    type: 'bar',
-    x: select_id['otu_ids'],
-    // x: select_id (Math.sum['otu_ids'])
-};
 
-var layout = {
-    'title': 'Top 10 OTUs',
-    'x-axis': 'Total OTU Count',
-    'y-axis': 'OTU ID',
-    'orientation': 'h'
-};
 
-}
+
 function buildChart(id_number) {
     d3.json('../../samples.json').then(data=> {
       var samples = data['samples'];
       // filter functions takes an array and returns an array
       var filtered_samples = samples.filter(item => item.id==id_number)
       var sample_dictionary = filtered_samples[0]
-      console.log(sample_dictionary)
+    //   console.log(sample_dictionary)
       var otu_ids = sample_dictionary['otu_ids']
+      var otu_string = otu_ids.slice(0,10).map(otu => `OTU ${otu}`)
+
+      var trace1 = [{
+        type: 'bar',
+        y: otu_string,
+        x: sample_dictionary['sample_values'].slice(0,10),
+        orientation: 'h'
+        // x: select_id (Math.sum['otu_ids'])
+    }]
+    //trace tells it what kind of graph to be and gives it the data to build the graph
+    
+    var layout1 = {
+        'title': 'Top 10 OTUs',
+        'x-axis': 'Total OTU Count',
+        'y-axis': 'OTU ID',       
+    };
+    plotly.newPlot('bar', trace1, layout1)
+
+    //start bubble chart here can start at line 24 
+    });
+};
+//need to build charts within the build chart function 
+
+function init() {
+    d3.json('../../samples.json').then(data=> {
+        console.log(data)
+
+        var subject_id = data['names']
+        console.log(subject_id)
+
+        var dropdownMenu = document.getElementById("selDataset");
+
+        for(var i = 0; i < subject_id.length; i++) {
+            var opt = subject_id[i];
+            var el = document.createElement("option");
+            el.textContent = opt;
+            el.value = opt;
+            dropdownMenu.appendChild(el);
+        }
+
+        // buildChart(subject_id[0])  this is how you initially get the data to show. 
+        });
+    };
+
+init() //this says run init when webpage starts up 
+
+
 
 // yticks is first ten of array from dictionary .slice 
 //.slice 0,10 gives the first ten 
@@ -60,7 +80,7 @@ function buildChart(id_number) {
 // can do exactly the same thing to get the sample_values
 // just don't need to convert to a string 
 
-}
+
 // filter always returns an array, will return an array of 1. want to pull it out of array to work w as dictionary
 // Once you have the ID number, go through larger dictionary
 // var data = [trace1, trace2];
