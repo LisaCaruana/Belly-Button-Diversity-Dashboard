@@ -20,7 +20,7 @@ d3.json('../../samples.json').then(data=> {
 
 
 });
-
+// Want to create a function to build all of the charts, need filtering of dataset depending on what ID number is selected 
 function optionChanged (select_id) {
     d3.json('../../samples.json').then(data=> {
         console.log(data);
@@ -28,7 +28,45 @@ function optionChanged (select_id) {
     demographics = data['metadata']
     console.log(demographics)
 });  
+
+var trace1 = {
+    type: 'bar',
+    x: select_id['otu_ids'],
+    // x: select_id (Math.sum['otu_ids'])
+};
+
+var layout = {
+    'title': 'Top 10 OTUs',
+    'x-axis': 'Total OTU Count',
+    'y-axis': 'OTU ID',
+    'orientation': 'h'
+};
+
 }
+function buildChart(id_number) {
+    d3.json('../../samples.json').then(data=> {
+      var samples = data['samples'];
+      // filter functions takes an array and returns an array
+      var filtered_samples = samples.filter(item => item.id==id_number)
+      var sample_dictionary = filtered_samples[0]
+      console.log(sample_dictionary)
+      var otu_ids = sample_dictionary['otu_ids']
+
+// yticks is first ten of array from dictionary .slice 
+//.slice 0,10 gives the first ten 
+// .map changes int to strings takes an array and changes each
+// element of the array into something ` ` assigns to string 
+// need .reverse to plot from highest to lowest 
+// can do exactly the same thing to get the sample_values
+// just don't need to convert to a string 
+
+}
+// filter always returns an array, will return an array of 1. want to pull it out of array to work w as dictionary
+// Once you have the ID number, go through larger dictionary
+// var data = [trace1, trace2];
+
+// plotly.newPlot('bubble', trace2, layout)
+
 // var data = Object.keys("metadata")
 //     console.log(data);
 
@@ -65,8 +103,7 @@ function optionChanged (select_id) {
 // }
 
 
-// plotly.newPlot('bar', data, layout)
-// plotly.newPlot('bubble', data, layout)
+
 // var filtered_data = data.filter(person => data['id']=== inputValue)   would need to set inputValue=dropdown
 // Data layout: names is a list that contains all of the different subject numbers as a string value, "metadata" is a 
 // list of dictionaries with key value pairs containing subject data, identified by subject numbers
