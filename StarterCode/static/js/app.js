@@ -14,6 +14,21 @@
 // });  
 
 
+// import plotly.graph_objects as plotly  
+function importData(samples) {
+    var url = "../../samples.json" + samples;
+    d3.json(url).then(data=> {
+        var samples = data['samples'];
+
+        var sample_data = d3.select("#sample-data");
+
+        sample_data.html("");
+
+        Object.defineProperties(sample).forEach(([key, value]) => {
+            var row = sample_data.append("p");
+            row.text(`${key}: ${value}`);
+        })
+});
 
 
 function buildChart(id_number) {
@@ -63,7 +78,7 @@ function init() {
             el.value = opt;
             dropdownMenu.appendChild(el);
         }
-
+        plotly.newPlot('bar', trace1, layout1)
         // buildChart(subject_id[0])  this is how you initially get the data to show. 
         });
     };
@@ -71,7 +86,7 @@ function init() {
 init() //this says run init when webpage starts up 
 
 
-
+// functions allow you to control when things happen. 
 // yticks is first ten of array from dictionary .slice 
 //.slice 0,10 gives the first ten 
 // .map changes int to strings takes an array and changes each
