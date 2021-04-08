@@ -1,20 +1,3 @@
-
-    // d3.selectAll("#selDataset").on("change", fillDropdown);
-    
-    // function fillDropdown ()
-
-
-// Want to create a function to build all of the charts, need filtering of dataset depending on what ID number is selected 
-// function optionChanged (select_id) {
-//     d3.json('../../samples.json').then(data=> {
-//         console.log(data);
-    
-//     demographics = data['metadata']
-//     console.log(demographics)
-// });  
-
-
-// import plotly.graph_objects as plotly  
 function importData(samples) {
     var url = "../../samples.json" + samples;
     d3.json(url).then(data=> {
@@ -27,8 +10,9 @@ function importData(samples) {
         Object.defineProperties(sample).forEach(([key, value]) => {
             var row = sample_data.append("p");
             row.text(`${key}: ${value}`);
-        })
-});
+        });
+    })
+    };
 
 
 function buildChart(id_number) {
@@ -55,7 +39,7 @@ function buildChart(id_number) {
         'x-axis': 'Total OTU Count',
         'y-axis': 'OTU ID',       
     };
-    plotly.newPlot('bar', trace1, layout1)
+    Plotly.newPlot('bar', trace1, layout1)
 
     //start bubble chart here can start at line 24 
     });
@@ -78,13 +62,130 @@ function init() {
             el.value = opt;
             dropdownMenu.appendChild(el);
         }
-        plotly.newPlot('bar', trace1, layout1)
+       
         // buildChart(subject_id[0])  this is how you initially get the data to show. 
         });
     };
 
-init() //this says run init when webpage starts up 
+init()
+    // d3.selectAll("#selDataset").on("change", fillDropdown);
+    
+    // function fillDropdown ()
 
+
+// Want to create a function to build all of the charts, need filtering of dataset depending on what ID number is selected 
+// function optionChanged (select_id) {
+//     d3.json('../../samples.json').then(data=> {
+//         console.log(data);
+    
+//     demographics = data['metadata']
+//     console.log(demographics)
+// });  
+
+// function buildChart(id_number) {
+//     d3.json('../../samples.json').then(data=> {
+//       var samples = data['samples'];
+//       // filter functions takes an array and returns an array
+//       var filtered_samples = samples.filter(item => item.id==id_number)
+//       var sample_dictionary = filtered_samples[0]
+//       var otu_ids = sample_dictionary['otu_ids']
+//       var otu_string = otu_ids.slice(0,10).map(otu => `OTU ${otu}`)
+
+//       var trace1 = [{
+//         type: 'bar',
+//         y: otu_string,
+//         x: sample_dictionary['sample_values'].slice(0,10),
+//         orientation: 'h'
+     
+//     }];
+//     //trace tells it what kind of graph to be and gives it the data to build the graph
+//       var layout1 = {
+//         'title': 'Top 10 OTUs',
+//         'x-axis': 'Total OTU Count',
+//         'y-axis': 'OTU ID',       
+//     };
+//     //     var layout2 = {
+//     //     'title': 'OTUs Measured',
+//     //     'x-axis': 'OTU IDs',
+//     //     'y-axis': 'Sample Values',       
+//     // };
+//     Plotly.newPlot('bar', trace1, layout1);
+//     // Plotly.newplot('bubble', trace2, layout2)
+// });
+//     // d3.json('../../samples.json').then(data=> {
+//     //     var samples = data['samples'];
+
+//     // var margin = { top: 30, right:150, bottom: 60, left: 30},
+//     //     width = 500 - margin.left - margin.right,
+//     //     height = 400 - margin.top - margin.bottom;
+    
+//     // var svg = d3.select("#bubble")
+//     //     .append("svg")
+//     //         .attr("width", width + margin.left + margin.right)
+//     //         .attr("height", height + margin.top + margin.bottom)
+//     //     .append("g")
+//     //         .attr("transform",
+//     //         "translate (" + margin.left + "," + margin.top + ")");
+    
+//     // var trace2 = [{
+//     //     type: 'bubble',
+//     //     y: 'samples',
+//     //     x: 'otu_ids'
+//     // }];
+//    // x: select_id (Math.sum['otu_ids'])
+//     // var layout2 = {
+//     //     'title': 'OTUs Measured',
+//     //     'x-axis': 'OTU IDs',
+//     //     'y-axis': 'Sample Values',       
+//     // };
+
+//     // Plotly.newplot('bubble', trace2, layout2)
+
+//     //start bubble chart here can start at line 24 
+
+
+// //need to build charts within the build chart function 
+
+// function init() {
+//     d3.json('../../samples.json').then(data=> {
+//         console.log(data)
+
+//         var subject_id = data['names']
+//         console.log(subject_id)
+
+//         var dropdownMenu = document.getElementById("selDataset");
+
+//         for(var i = 0; i < subject_id.length; i++) {
+//             var opt = subject_id[i];
+//             var el = document.createElement("option");
+//             el.textContent = opt;
+//             el.value = opt;
+//             dropdownMenu.appendChild(el);
+//         };
+
+//         });
+//     };
+
+// init(); //this says run init when webpage starts up 
+
+// // Plotly.newPlot('bar', trace1, layout1)
+// // buildChart(subject_id[0])  this is how you initially get the data to show. 
+
+// // // import plotly.graph_objects as plotly  
+// // function importData(samples) {
+// //     var url = "../../samples.json" + samples;
+// //     d3.json(url).then(data=> {
+// //         var samples = data['samples'];
+
+// //         var sample_data = d3.select("#sample-data");
+
+// //         sample_data.html("");
+
+// //         Object.defineProperties(sample).forEach(([key, value]) => {
+// //             var row = sample_data.append("p");
+// //             row.text(`${key}: ${value}`);
+// //         })
+// // });
 
 // functions allow you to control when things happen. 
 // yticks is first ten of array from dictionary .slice 
@@ -156,5 +257,3 @@ init() //this says run init when webpage starts up
 // * Use `sample_values` as the values for the bar chart.
 
 // * Use `otu_ids` as the labels for the bar chart.
-
-// * Use `otu_labels` as the hovertext for the chart
