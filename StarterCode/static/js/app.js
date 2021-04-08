@@ -21,7 +21,6 @@ function buildChart(id_number) {
       // filter functions takes an array and returns an array
       var filtered_samples = samples.filter(item => item.id==id_number)
       var sample_dictionary = filtered_samples[0]
-    //   console.log(sample_dictionary)
       var otu_ids = sample_dictionary['otu_ids']
       var otu_string = otu_ids.slice(0,10).map(otu => `OTU ${otu}`)
 
@@ -31,17 +30,27 @@ function buildChart(id_number) {
         x: sample_dictionary['sample_values'].slice(0,10),
         orientation: 'h'
         // x: select_id (Math.sum['otu_ids'])
-    }]
+    }];
     //trace tells it what kind of graph to be and gives it the data to build the graph
-    
-    var layout1 = {
+      var layout1 = [{
         'title': 'Top 10 OTUs',
         'x-axis': 'Total OTU Count',
         'y-axis': 'OTU ID',       
-    };
+    }];
     Plotly.newPlot('bar', trace1, layout1)
 
     //start bubble chart here can start at line 24 
+      var trace2 = [{
+        type: 'bubble',
+        y: 'samples',
+        x: 'otu_ids'
+    }];
+      var layout2 = [{
+        'title': 'OTUs Measured',
+        'x-axis': 'OTU IDs',
+        'y-axis': 'Sample Values',       
+    }];
+    Plotly.newPlot('bubble', trace2, layout2)
     });
 };
 //need to build charts within the build chart function 
