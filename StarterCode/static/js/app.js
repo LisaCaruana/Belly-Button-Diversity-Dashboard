@@ -72,26 +72,29 @@ function buildChart(id_number) {
         'y-axis': 'OTU ID',       
     };
     Plotly.newPlot('bar', trace1, layout1)
+    // id_number=("")
     console.log(id_number)
     //start bubble chart here can start at line 24 
     // d3.json('../../samples.json').then(data=> {
     //     var samples2 = data['samples'];
         // filter functions takes an array and returns an array
-    //     var filtered_samples2 = samples2.filter(item => item.id==id_number)
-    //     var sample_dictionary2 = filtered_samples2[0]
-    //     var otu_ids2 = sample_dictionary2['otu_ids']
-    //   var trace2 = [{
-    //     type: 'bubble',
-    //     y: 'filtered_samples2',
-    //     x: 'otu_ids2'
-    // }];
-    //   var layout2 = [{
-    //     'title': 'OTUs Measured',
-    //     'x-axis': 'OTU IDs',
-    //     'y-axis': 'Sample Values',       
-    // }];
+        var filtered_samples2 = samples.filter(item => item.id==id_number)
+        var sample_dictionary2 = filtered_samples2[0] 
+        var otu_ids2 = sample_dictionary2['otu_ids']
+        // var otu_ids2 = sample_dictionary['otu_ids']
+
+      var trace2 = [{
+        type: 'bubble',
+        y: 'filtered_samples2',
+        x: 'otu_ids2'
+    }];
+      var layout2 = [{
+        'title': 'OTUs Measured',
+        'x-axis': 'OTU IDs',
+        'y-axis': 'Sample Values',       
+    }];
     
-    // Plotly.newPlot('bubble', trace2, layout2)
+    Plotly.newPlot('bubble', trace2, layout2)
     build_table(id_number)
     });
 }; 
