@@ -1,45 +1,18 @@
-// function importData(samples) {
-//     var url = "../../samples.json" + samples;
-//     d3.json(url).then(data=> {
-//         var samples = data['samples'];
-
-//         var sample_data = d3.select("#sample-data");
-
-//         sample_data.html("");
-
-//         Object.defineProperties(sample).forEach(([key, value]) => {
-//             var row = sample_data.append("p");
-//             row.text(`${key}: ${value}`);
-//         });
-//     })
-// };
-
-
-
 function build_table(sampleData) {
     d3.json('../../samples.json').then(data=> {
         // find the relevant metadata for "sampleData"
         // pull the metadata key from our samples.json
         var samples_table = data['metadata']
-        // samples_tables is an array of objects
         var filtered_table = samples_table.filter(item => item.id==sampleData);
-        // filtered_table is an array of (one) object from the samples_table array
         var sample=filtered_table[0]
-        // sample is the first and only element from the filtered_table array
         var meta_box = d3.select("#sample-metadata");
         meta_box.html("")
         console.log(sample)
-        // var tbody = d3.select("#sample-metadata");
-        // var html_string=`age: ${sample['age']}<hr>bbtype: ${sample['bbtype']}`
-
-        // filtered_table.html("");
-        // convert the object {key:value} to [[key, value], [key, value]]
-        // var chart = d3.select['#sample-metadata']
+       
         Object.entries(sample).forEach(([key, value]) => {
             var row = meta_box.append("p");
             row.text(`${key}: ${value}`);
-        // meta_box.html(html_string)
-    // build_table(filtered_table)
+   
     });
 });
 }; 
@@ -49,39 +22,27 @@ function build_table(sampleData) {
 function buildChart(id_number) {
     d3.json('../../samples.json').then(data=> {
       var samples = data['samples'];
-      // filter functions takes an array and returns an array
       var filtered_samples = samples.filter(item => item.id==id_number)
       var sample_dictionary = filtered_samples[0]
       var otu_ids = sample_dictionary['otu_ids']
       var otu_string = otu_ids.slice(0,10).map(otu => `OTU ${otu}`)
-    //   var tbody = d3.select("#sample-metadata")
-
-    //   build_table(filtered_samples);
+    
 
       var trace1 = [{
         type: 'bar',
         y: otu_string,
         x: sample_dictionary['sample_values'].slice(0,10),
         orientation: 'h'
-        // x: select_id (Math.sum['otu_ids'])
-    }];
-    //trace tells it what kind of graph to be and gives it the data to build the graph
+     }];
+   
       var layout1 = {
         'title': 'Top 10 OTUs',
         'x-axis': 'Total OTU Count',
         'y-axis': 'OTU ID',       
     };
     Plotly.newPlot('bar', trace1, layout1)
-    // id_number=("")
     console.log(id_number)
-    //start bubble chart here can start at line 24 
-    // d3.json('../../samples.json').then(data=> {
-    //     var samples2 = data['samples'];
-        // filter functions takes an array and returns an array
-        // var filtered_samples2 = samples.filter(item => item.id==id_number)
-        // var sample_dictionary2 = filtered_samples2[0] 
-        // var otu_ids2 = sample_dictionary2['otu_ids']
-        // // var otu_ids2 = sample_dictionary['otu_ids']
+  
         console.log(sample_dictionary)
         var trace2 = [{
             x: otu_ids,
@@ -106,8 +67,6 @@ function buildChart(id_number) {
     });
 }; 
 
-//need to build charts within the build chart function 
-
 function init() {
     d3.json('../../samples.json').then(data=> {
         console.log(data)
@@ -125,11 +84,45 @@ function init() {
             dropdownMenu.appendChild(el);
         }
         build_table(subject_id[0])
-        buildChart(subject_id[0]) //this is how you initially get the data to show. 
+        buildChart(subject_id[0]) 
         });
     };
 
 init()
+
+ // var tbody = d3.select("#sample-metadata");
+        // var html_string=`age: ${sample['age']}<hr>bbtype: ${sample['bbtype']}`
+
+        // filtered_table.html("");
+        // convert the object {key:value} to [[key, value], [key, value]]
+        // var chart = d3.select['#sample-metadata']
+     // meta_box.html(html_string)
+    // build_table(filtered_table)
+  //start bubble chart here can start at line 24 
+    // d3.json('../../samples.json').then(data=> {
+    //     var samples2 = data['samples'];
+        // filter functions takes an array and returns an array
+        // var filtered_samples2 = samples.filter(item => item.id==id_number)
+        // var sample_dictionary2 = filtered_samples2[0] 
+        // var otu_ids2 = sample_dictionary2['otu_ids']
+        // // var otu_ids2 = sample_dictionary['otu_ids']
+// function importData(samples) {
+//     var url = "../../samples.json" + samples;
+//     d3.json(url).then(data=> {
+//         var samples = data['samples'];
+
+//         var sample_data = d3.select("#sample-data");
+
+//         sample_data.html("");
+
+//         Object.defineProperties(sample).forEach(([key, value]) => {
+//             var row = sample_data.append("p");
+//             row.text(`${key}: ${value}`);
+//         });
+//     })
+// };
+
+
 // d3.selectAll("#selDataset").on("change", build_table);
     //117 does the same thing as line 126 in HTML 
     
