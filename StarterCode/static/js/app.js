@@ -78,21 +78,28 @@ function buildChart(id_number) {
     // d3.json('../../samples.json').then(data=> {
     //     var samples2 = data['samples'];
         // filter functions takes an array and returns an array
-        var filtered_samples2 = samples.filter(item => item.id==id_number)
-        var sample_dictionary2 = filtered_samples2[0] 
-        var otu_ids2 = sample_dictionary2['otu_ids']
-        // var otu_ids2 = sample_dictionary['otu_ids']
+        // var filtered_samples2 = samples.filter(item => item.id==id_number)
+        // var sample_dictionary2 = filtered_samples2[0] 
+        // var otu_ids2 = sample_dictionary2['otu_ids']
+        // // var otu_ids2 = sample_dictionary['otu_ids']
+        console.log(sample_dictionary)
+        var trace2 = [{
+            x: otu_ids,
+            y: sample_dictionary['sample_values'],
+            text: sample_dictionary['otu_labels'],
+            mode: 'markers',
+            marker: {
+                size: sample_dictionary['sample_values'],
+                color: otu_ids,
+                colorscale: "Earth"
+            }
+            }];
 
-      var trace2 = [{
-        type: 'bubble',
-        y: 'filtered_samples2',
-        x: 'otu_ids2'
-    }];
-      var layout2 = [{
-        'title': 'OTUs Measured',
-        'x-axis': 'OTU IDs',
-        'y-axis': 'Sample Values',       
-    }];
+        var layout2 = {
+            title: 'OTUs Measured',
+            hovermode: 'closest',
+            xaxis: {title: ('otu_ids')}       
+    };
     
     Plotly.newPlot('bubble', trace2, layout2)
     build_table(id_number)
