@@ -1,5 +1,5 @@
 function build_table(sampleData) {
-    d3.json('../../samples.json').then(data=> {
+    d3.json('samples.json').then(data=> {
         // find the relevant metadata for "sampleData"
         // pull the metadata key from our samples.json
         var samples_table = data['metadata']
@@ -20,7 +20,7 @@ function build_table(sampleData) {
 
 
 function buildChart(id_number) {
-    d3.json('../../samples.json').then(data=> {
+    d3.json('samples.json').then(data=> {
       var samples = data['samples'];
       var filtered_samples = samples.filter(item => item.id==id_number)
       var sample_dictionary = filtered_samples[0]
@@ -68,7 +68,7 @@ function buildChart(id_number) {
 }; 
 
 function init() {
-    d3.json('../../samples.json').then(data=> {
+    d3.json('samples.json').then(data=> {
         console.log(data)
 
         var subject_id = data['names']
